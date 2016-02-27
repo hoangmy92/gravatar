@@ -1,0 +1,12 @@
+{
+  "options": {
+    "requireType": {
+      "type": "boolean",
+      "default": false
+    },
+    "secure": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

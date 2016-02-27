@@ -1,0 +1,35 @@
+{
+  "name": "gravatar",
+  "version": "0.0.1",
+  "description": "An utility to interact with GRAVATAR",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hoangmy92/gravatar.git"
+  },
+  "keywords": [
+    "nodejs",
+    "gravatar"
+  ],
+  "author": "MyTruong(hoangmy92@gmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hoangmy92/gravatar/issues"
+  },
+  "homepage": "https://github.com/hoangmy92/gravatar#readme",
+  "dependencies": {
+    "crypto": "0.0.3",
+    "nconf": "^0.8.4"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^2.2.0",
+    "image-size": "^0.4.0",
+    "mocha": "^2.4.5",
+    "request": "^2.69.0"
+  }
+}
