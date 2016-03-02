@@ -1,5 +1,6 @@
-var url   = require('url');
-var util  = require('./util');
+var url  = require('url');
+var _    = require('lodash');
+var util = require('./util');
 
 module.exports = function(email, options) {
   /**
@@ -95,26 +96,35 @@ module.exports = function(email, options) {
    *   });                    // Get avatar by secure link - https
    */
   function getAvatar(options) {
-    var ops  = this.options;
-    var path = this.rootPath;
+    var ops   = this.options;
+    var path  = this.rootPath;
+    var query = '?';
 
     // Get avatar by custom options
     if (typeof options === 'object') {
-      for (var key in options) {
-        options.hasOwnProperty(key) && (ops[key] = options[key]);
-      }
+      ops = _.merge(ops, options);
     }
 
-    path = url.resolve(
-        url.resolve(
-          ((ops['secure'] === true) ? 'https://secure.' : 'http://www.') + path,
-          'avatar/1'
-        ), this.hash
-      ) + ((ops['requireType'] === true) ? '.jpg?' : '?') +
-      ((typeof ops['size'] === 'number') ? ('s=' + ops['size']) : '') + '&' +
-      ((typeof ops['default'] === 'string') ? ('d=' + encodeURIComponent(ops['default'])) : '');
+    path  = url.resolve(getSecureLink(ops) + 'avatar/1', this.hash);
+    query += _.map(Object.keys(ops), function(key) {
+        if (key === 'requireType' && ops['requireType'] === true) {
+          path += '.jpg';
+        }
+        return key + '=' + (ops[key] ? ops[key].toString() : '');
+    }).join('&');
 
-    return path;
+    return path + query;
+  }
+
+  /**
+   * Get secure link folowing by option
+   * @param  {Object} options List of options
+   * @return {String}         Absolute Gravatar link path
+   */
+  function getSecureLink(options) {
+    var host;
+    host = (options['secure'] === true) ? 'https://secure' : 'http://www';
+    return host + '.gravatar.com/';
   }
 
   return new Gravatar(email, options);
